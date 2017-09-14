@@ -1,6 +1,37 @@
-    button,
-    div,
-    form,
-    input {
-      margin: 10px;
-    }
+button,
+div,
+form,
+input {
+  margin: 10px;
+}
+
+h1 {
+	text-align: center;
+}
+
+#button-view {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.margin {
+	color: red;
+}
+
+#car-form {
+	border-color: black;
+	border-style: solid;
+	padding: 5px;
+}
+
+#buttons-view {
+	border-color: black;
+	border-style: solid;
+	padding: 5px;
+}
+
+/*#carDisplay {
+	border-color: black;
+	border-style: solid;
+	padding: 5px;
+}*/

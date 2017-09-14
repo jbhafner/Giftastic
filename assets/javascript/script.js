@@ -19,9 +19,11 @@ function renderButtons() {
 	  // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
 	  var a = $("<button>");
 	  // Adds a class of movie to our button
-	  a.addClass("car");
+	  a.addClass("carButton");
 	  // Added a data-attribute
 	  a.attr("data-name", cars[i]);
+	  // // add bootstrap styling to buttons
+	  // a.attr("class","btn btn-primary");
 	  // Provided the initial button text
 	  a.text(cars[i]);
 	  // Added the button to the buttons-view div
@@ -33,10 +35,10 @@ function renderButtons() {
 $("#add-car").on("click", function(event) {
 	event.preventDefault();
 	// This line of code will grab the input from the textbox
-	var movie = $("#car-input").val().trim();
+	var newCarButton = $("#car-input").val().trim();
 
-	// The movie from the textbox is then added to our array
-	cars.push(movie);
+	// The new car from the textbox is then added to our array
+	cars.push(newCarButton);
 
 	// Calling renderButtons which handles the processing of our movie array
 	renderButtons();
@@ -49,7 +51,6 @@ function displayCarGifs() {
 
 	var car = $(this).attr("data-name");
 	console.log(car);
-	// var queryURL = "http://api.giphy.com/v1/gifs/random?api_key=e5beba6b105b4b1dab5168b116166278&tag=" + car +'"';
 	var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
 	car + "&api_key=e5beba6b105b4b1dab5168b116166278&limit=" + CAR_PARAMETER.limit;
 	console.log("queryURL = " + queryURL);
@@ -74,31 +75,51 @@ function displayCarGifs() {
 
 		carDiv.append(rating);
 
-		var imageUrl = response.data[i].images.original.url;
-		console.log("var imageUrl = " + imageUrl);
+		var imageUrlGif = response.data[i].images.fixed_height_small.url;
+		var imageUrlStill = response.data[i].images.fixed_height_small_still.url;
+		console.log("var imageUrlGif = " + imageUrlGif);
+		console.log("var imageUrlStill = " + imageUrlStill);
 
 		var carImage = $("<img>");
-		carImage.attr("src", imageUrl);
+		carImage.attr("src", imageUrlGif);
+		carImage.attr("data-still", imageUrlStill);
+		carImage.attr("data-animate", imageUrlGif);
 		carImage.attr("alt", "car image");
+		carImage.attr("data-state","animate");
+		carImage.attr("class", "carGif");		
 		console.log("carImage is " + carImage);
 
 		carDiv.append(carImage);
 
 		$("#carDisplay").prepend(carDiv);
 	}
-	  // $("#movie-rating").html("<p> Movie Rating: " + response.Rated + "</p>");
-	  // $("#movie-actors").html("<p> Movie Actors: " + response.Actors + "</p>");
-	  // $("#movie-plot").html("<p> Movie Plot: " + response.Plot + "</p>");
-	  // $("#movie-poster").html("<img src=" + response.Poster + ">");                        
-	  // YOUR CODE GOES HERE!!!
 
 	});
 
 }
 
-// Adding click event listeners to all elements with a class of "car"
-$(document).on("click", ".car", displayCarGifs);
+// Adding click event listeners to all elements with a class of "carButton"
+$(document).on("click", ".carButton", displayCarGifs);
 console.log(displayCarGifs + "clicked");
+
+// Event listener for click event on Gifs (still/animate)
+
+$(document).on("click", ".carGif",function() {
+  console.log("gif clicked");	
+  // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
+  var state = $(this).attr("data-state");
+  // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+  // Then, set the image's data-state to animate
+  // Else set src to the data-still value
+  if (state === "still") {
+    $(this).attr("src", $(this).attr("data-animate"));
+    $(this).attr("data-state", "animate");
+  } else {
+    $(this).attr("src", $(this).attr("data-still"));
+    $(this).attr("data-state", "still");
+  }
+});
 
 // Call the initial Function
 renderButtons();
+

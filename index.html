@@ -8,18 +8,20 @@
 <body>
 
   <div class="container">
-    <h1>Auto Brand Gifs</h1>
+    <div class="jumbotron">
+      <h1>Auto Brand Gifs</h1>
+    </div>
+      <!-- Rendered buttons will get dumped Here  -->
+      <div id="buttons-view"></div>
 
-    <!-- Rendered buttons will get dumped Here  -->
-    <div id="buttons-view"></div>
+      <form id="car-form">
+        <label for="car-input">Add a Car Brand</label>
+        <input type="text" id="car-input"><br>
 
-    <form id="car-form">
-      <label for="car-input">Add a Car Brand</label>
-      <input type="text" id="car-input"><br>
+        <!-- Button triggers new movie to be added -->
+        <input id="add-car" type="submit" value="Add a Car Model">
+      </form>
 
-      <!-- Button triggers new movie to be added -->
-      <input id="add-car" type="submit" value="Add a Car Model">
-    </form>
 
     <div id=carDisplay></div>
 
