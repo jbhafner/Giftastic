@@ -1,3 +1,4 @@
+// List of constants
 const CAR_PARAMETER = {
 	limit: 10
 } 
@@ -31,18 +32,29 @@ function renderButtons() {
 	}
 }
 
-// This function adds car buttons
-$("#add-car").on("click", function(event) {
-	event.preventDefault();
-	// This line of code will grab the input from the textbox
-	var newCarButton = $("#car-input").val().trim();
+	// This function adds car buttons
+	$("#add-car").on("click", function(event) {
+		event.preventDefault();
+		// This line of code will grab the input from the textbox
+		var newCarButton = $("#car-input").val().trim();
 
-	// The new car from the textbox is then added to our array
-	cars.push(newCarButton);
+		// check if car is already in array 
+		for (var i=0; i<cars.length; i++) {
+			console.log("entered for loop");
+			if (cars[i]===newCarButton) {
+				console.log("entered if");
+				console.log(cars[i] + " // " + newCarButton);
+				alert("You have already entered " + newCarButton);
+				return;
+			} 
+		}
 
-	// Calling renderButtons which handles the processing of our movie array
-	renderButtons();
+					// The new car from the textbox is then added to our array
+			cars.push(newCarButton);
 
+			// Calling renderButtons which handles the processing of our movie array
+			renderButtons();
+			return;			
 });
 
 function displayCarGifs() {
